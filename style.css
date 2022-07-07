@@ -1,0 +1,43 @@
+body{
+  font-size: 22px;
+  font-family:'sans-serif', cursive;
+text-align: center;
+width: fit-content;
+margin: auto;
+
+}
+
+.head {
+  color: brown;
+}
+.article {
+  color: darkgrey;
+  border: 3px solid burlywood;
+  width: fit-content;
+margin: auto;
+}
+.footer {
+  color:darkgrey;
+  border: 3px solid burlywood;
+  width: fit-content;
+  margin: auto;
+}
+#e {
+background-image: url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F9%2F2019%2F09%2FCoffee-National-Coffee-Day-FT-Blog0919.jpg);
+  border:2px solid chocolate;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding:4%;
+  margin: auto;
+}
+@media  screen and (min-width:550px){
+  body{
+    font-size: 18px;
+    font-family:'sans-serif', cursive;
+  }
+}
+@media  screen and (max-width:900px){
+  body{
+    font-size: 24px;
+    font-family:'sans-serif', cursive;
+}
