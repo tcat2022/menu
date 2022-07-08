@@ -11,20 +11,20 @@ margin: auto;
   color: brown;
 }
 .article {
-  color: darkgrey;
-  border: 3px solid burlywood;
+  color: brown;
+  border: 3px solid sandybrown;
   width: fit-content;
 margin: auto;
 }
 .footer {
-  color:darkgrey;
-  border: 3px solid burlywood;
+  color:brown;
+  border: 3px solid sandybrown;
   width: fit-content;
   margin: auto;
 }
 #e {
-background-image:url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F9%2F2019%2F09%2FCoffee-National-Coffee-Day-FT-Blog0919.jpg);
-  border:2px solid chocolate;
+background-image:url(https://static.vecteezy.com/system/resources/thumbnails/002/921/118/small/cartoon-cute-cat-in-cup-coffee-free-vector.jpg);
+  border:3px solid sandybrown;
   background-size: 101% 101%;
   background-repeat: no-repeat;
   padding:1%;
@@ -35,7 +35,12 @@ background-image:url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2
 background-repeat: no-repeat;
 background-size: 15% 15%;
   background-position: bottom right;
-;
+}
+#cat {
+  background-image: url(https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=49ed3252c0b2ffb49cf8b508892e452d);
+  background-repeat: no-repeat;
+  background-size: 15% 15%;
+    background-position: bottom left;
 }
 @media  screen and (min-width:550px){
   body{
