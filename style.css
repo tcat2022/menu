@@ -1,5 +1,5 @@
 body{
-  font-size: 22px;
+  font-size: 20px;
   font-family:'sans-serif', cursive;
 text-align: center;
 width: fit-content;
@@ -42,13 +42,13 @@ background-size: 15% 15%;
   background-size: 15% 15%;
     background-position: bottom left;
 }
-@media  screen and (min-width:550px){
+@media  screen and (min-width:550px) and (max-width:800px){
   body{
-    font-size: 18px;
+    font-size: 40px;
     font-family:'sans-serif', cursive;
   }
 }
-@media  screen and (max-width:900px){
+@media  screen and (max-width:900px) and (min-width:550px){
   body{
     font-size: 24px;
     font-family:'sans-serif' cursive;
