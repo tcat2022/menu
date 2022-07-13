@@ -26,11 +26,11 @@ margin: 5%;
 }
 #e {
 background-image:url(https://static.vecteezy.com/system/resources/thumbnails/002/921/118/small/cartoon-cute-cat-in-cup-coffee-free-vector.jpg);
-  border:3px solid chocolate;
+  border:3px groove chocolate;
   background-size: 101% 101%;
   background-repeat: no-repeat;
-  padding:2%;
-  margin:-4%;
+  padding:1%;
+  margin:-6%;
 }
 
 #cat {
@@ -40,7 +40,7 @@ background-image:url(https://static.vecteezy.com/system/resources/thumbnails/002
   background-repeat: no-repeat,no-repeat;
   background-size: 15% 15%;
     background-position: bottom left, bottom right;
-    border: 3px solid chocolate;
+    border: 3px groove chocolate;
     padding: 1%;
 }
 #owner {
@@ -48,6 +48,13 @@ color: mediumvioletred;
 border: 2px solid sandybrown;
 width: fit-content;
 margin: 3% auto;
+}
+#info {
+color:cyan;
+border: 4px groove brown;
+background-color: ivory;
+width: fit-content;
+margin: 6% auto;
 }
   @media  screen and (min-width:550px) and (max-width:800px){
   body{
