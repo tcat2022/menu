@@ -9,6 +9,8 @@ margin: auto;
 
 .head {
   color:mediumvioletred;
+  padding: 1%;
+margin: 5%;
 }
 .article {
   color:mediumvioletred;
@@ -27,7 +29,7 @@ background-image:url(https://static.vecteezy.com/system/resources/thumbnails/002
   border:3px solid chocolate;
   background-size: 101% 101%;
   background-repeat: no-repeat;
-  padding:1%;
+  padding:2%;
   margin:-4%;
 }
 
@@ -39,7 +41,13 @@ background-image:url(https://static.vecteezy.com/system/resources/thumbnails/002
   background-size: 15% 15%;
     background-position: bottom left, bottom right;
     border: 3px solid chocolate;
-    padding: 2%;
+    padding: 1%;
+}
+#owner {
+color: mediumvioletred;
+border: 2px solid sandybrown;
+width: fit-content;
+margin: 3% auto;
 }
   @media  screen and (min-width:550px) and (max-width:800px){
   body{
