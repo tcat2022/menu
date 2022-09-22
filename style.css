@@ -5,4 +5,38 @@
   top: 0%;
   left: 0%;
   background: black;
+ z-index: -1%;
+
+}
+#cool{
+width: 100%;
+position: absolute;
+top: 20%;
+
+}
+h1{
+  color: white;
+text-align: center;
+border: 5px solid peru;
+padding: 30px;
+width:25%;
+margin: auto;
+}
+h1:hover{
+animation: bh 50s infinite;
+}
+@keyframes bh {
+  3%{
+    background: lightskyblue;
+    border: 8px solid peru;
+    padding: 40px;
+  }
+  60%{
+    border: 8px solid peru;
+    padding: 40px;
+  }
+  100%{
+    border: 8px solid peru;
+    padding: 40px;
+  }
 }
