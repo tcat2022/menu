@@ -21,6 +21,7 @@ border: 5px solid peru;
 padding: 30px;
 width:25%;
 margin: auto;
+background:rgb(216, 85, 9);
 }
 h1:hover{
 animation: bh 50s infinite;
@@ -40,4 +41,18 @@ animation: bh 50s infinite;
     padding: 40px;
   }
 }
-
+#sqr1{
+  position: absolute;
+  left: 35%;
+width: 10%;
+padding: 10%;
+background-color: blue;
+}
+#sqr2{
+  position: absolute;
+  top: 40%;
+  left: 20%;
+  width: 20%;
+  padding: 20%;
+  background-color:red;
+}
