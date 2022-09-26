@@ -1,4 +1,4 @@
-let canvas = document.getElementById("canvas")
+let canvas = document.getElementById("canvas1")
 canvas.height = window.innerHeight
 canvas.width = window.innerWidth
 ctx = canvas.getContext("2d")
@@ -14,12 +14,13 @@ class Player {
             y:0
         }
         this.width = 30
-        this.height = 30
+        this.height = 40
     }
     draw() {
-        ctx.fillStyle = "red"
+        ctx.fillStyle = "chocolate"
         ctx.fillRect(this.position.x, this.position.y, 
             this.width,this.height)
+           
 
     }
     update(){
@@ -43,14 +44,34 @@ class Platform {
        this.height = 20
 }
 draw() {
-    ctx.fillStyle = "blue"
+    ctx.fillStyle = "forestgreen"
 ctx.fillRect(this.position.x,this.position.y,
      this.width, this.height)
 }
+
 }
-const player = new Player()
-const platforms = [new Platform({ x:600, y:260, b:150 
-}), new Platform({x:20, y:300,  b:450})]
+
+class Enemy{
+constructor({x,y}){
+   this.position = {
+    x:x,
+    y:y
+   }
+   this.width = 20
+   this.height = 20
+}
+draw(){
+    ctx.fillStyle = "red"
+    ctx.beginPath()
+    ctx.arc(this.position.x,this.position.y,10, 0, 2* Math.PI)
+    ctx.fill()
+}
+}
+
+let player = new Player()
+let enemys = [new Enemy({x:350, y:350}), new Enemy({x:300, y:300})]
+let platforms = [new Platform({ x:600, y:260, b:150 
+}), new Platform({x:20, y:300,  b:150})]
 const keys = {
     right: {
         pressed: false
@@ -59,32 +80,56 @@ const keys = {
         pressed: false
     }
 }
-
 let scrollOfset = 0;
+function init(){
+    enemys =  [new Enemy({x:550, y:350}), 
+        new Enemy({x:1600, y:300}),
+        new Enemy({x:800, y:330}),
+        new Enemy({x:1100, y:330}),
+        new Enemy({x:1200, y:380}),
+        new Enemy({x:1350, y:335}),
+        new Enemy({x:1480, y:290}),]
+ player = new Player()
+ platforms = [new Platform({ x:450, y:360, b:200 
+}), new Platform({x:0, y:400,  b:350}),
+new Platform({x:760, y:400,  b:400}),
+new Platform({x:1250, y:350,  b:50}),
+new Platform({x:1400, y:300,  b:90}),
+new Platform({x:1500, y:400,  b:350})]
+ scrollOfset = 0;
+}
 function animate(){
     requestAnimationFrame(animate)
     ctx.clearRect(0,0,canvas.width,canvas.height)
     player.update()
+   enemys.forEach(enemy => {enemy.draw()}) 
     platforms.forEach(platform => {
         platform.draw()
     })
-
 if(keys.right.pressed && player.position.x
    < 400 ) {
     player.velocity.x = 5
-} else if(keys.left.pressed && player.position.x
-    > 100){
+} else if((keys.left.pressed && player.position.x
+    > 100) || (keys.left.pressed && scrollOfset === 0 &&
+    player.position.x > 0)){
 player.velocity.x = -5
 }
 else {player.velocity.x = 0
 
-    if(keys.right.pressed) {
+    if(keys.right.pressed && scrollOfset < 1530 ) {
         scrollOfset += 5
+       enemys.forEach(enemy => {
+        enemy.position.x -= 5
+       })
         platforms.forEach(platform => {
          platform.position.x -= 5 
     }) 
-    }else if(keys.left.pressed) {
+    }else if(keys.left.pressed && scrollOfset > 0) {
         scrollOfset -= 5
+        enemys.forEach(enemy => {
+            enemy.position.x += 5
+           })
+       
         platforms.forEach(platform => {
             platform.position.x += 5 
         }) 
@@ -102,13 +147,27 @@ platforms.forEach(platform => {
 player.velocity.y = 0
  }
 })
-if(scrollOfset > 1000){
-    console.log("you win")
-}
+if(scrollOfset >= 1300){
+    
+}  enemys.forEach(enemy => {
+    
+
+ if(player.position.x + player.width >= enemy.position.x &&
+     player.position.x  <= enemy.position.x + enemy.width &&
+     player.position.y + player.height >= enemy.position.y &&
+     player.position.y <= enemy.position.y + enemy.height) {
+    init() 
+ }})
 if(player.position.y > canvas.height){
    init() 
 }
+if((player.position.y < 200) || (player.position.y > 450)){
+    player.velocity.y += 3 
+    console.log("h")
 }
+}
+
+init()
 animate()
 addEventListener('keydown', ({keyCode}) => {
     switch(keyCode){
@@ -117,7 +176,7 @@ addEventListener('keydown', ({keyCode}) => {
     keys.left.pressed = true
     break;
     case 32:
-        player.velocity.y -= 20
+        player.velocity.y -= 15 
         console.log("up")
      console.log("up")
      break;
@@ -129,6 +188,7 @@ addEventListener('keydown', ({keyCode}) => {
        console.log("down")
 }
 })
+
 addEventListener('keyup', ({keyCode}) => {
     switch(keyCode){
    case 65:
@@ -147,3 +207,4 @@ addEventListener('keyup', ({keyCode}) => {
        console.log("down")
 }
 })
+let win = document.getElementById("win")
