@@ -1,6 +1,7 @@
 let canvas = document.getElementById("canvas1")
 canvas.height = window.innerHeight
 canvas.width = window.innerWidth
+alert('"A" to move left \n "D" to move right \n "SPACE" to jump \n "W" to teleport on yellow squares')
 ctx = canvas.getContext("2d")
 const gravity = 1.5
 class Player {
@@ -200,7 +201,7 @@ if(scrollOfset >= 1300){
     player.position.y <= teleporter.position.y 
     + teleporter.height && keys.up.pressed ){
         
-     window.open("numba2.html")
+        document.location.href = "numba2.html"
       console.log("tele")
      
     }})

@@ -199,7 +199,7 @@ if(scrollOfset >= 1300){
     player.position.y <= teleporter.position.y 
     + teleporter.height && keys.up.pressed ){
         
-     window.open("coll.html")
+        document.location.href = "coll.html"
       console.log("tele")
      
     }})
