@@ -200,7 +200,7 @@ if(scrollOfset >= 1300){
     player.position.y <= teleporter.position.y 
     + teleporter.height && keys.up.pressed ){
         
-     window.open("numba2.html")
+     window.open("index.html")
       console.log("tele")
      
     }})
