@@ -1,4 +1,4 @@
-let canvas = document.getElementById("canvas1")
+let canvas = document.getElementById("canvas2")
 canvas.height = window.innerHeight
 canvas.width = window.innerWidth
 ctx = canvas.getContext("2d")
@@ -17,7 +17,7 @@ class Player {
         this.height = 40
     }
     draw() {
-        ctx.fillStyle = "chocolate"
+        ctx.fillStyle = "white"
         ctx.fillRect(this.position.x, this.position.y, 
             this.width,this.height)
            
@@ -44,7 +44,7 @@ class Platform {
        this.height = 20
 }
 draw() {
-    ctx.fillStyle = "forestgreen"
+    ctx.fillStyle = "purple"
 ctx.fillRect(this.position.x,this.position.y,
      this.width, this.height)
 }
@@ -61,7 +61,7 @@ constructor({x,y}){
    this.height = 20
 }
 draw(){
-    ctx.fillStyle = "red"
+    ctx.fillStyle = "blue"
 
 ctx.beginPath()
 ctx.arc(this.position.x,this.position.y,10, 0, 2* Math.PI)
@@ -105,22 +105,21 @@ const keys = {
 
 let scrollOfset = 0;
 function init(){
-    enemys =  [new Enemy({x:550, y:350}), 
-        new Enemy({x:1600, y:300}),
-        new Enemy({x:800, y:330}),
-        new Enemy({x:1100, y:330}),
-        new Enemy({x:1200, y:380}),
-        new Enemy({x:1350, y:335}),
-        new Enemy({x:1480, y:290}),]
+    enemys =  [new Enemy({x:550, y:425}), 
+        new Enemy({x:880, y:550}),
+        new Enemy({x:1050, y:580}),
+        new Enemy({x:1200, y:580}),
+        new Enemy({x:1350, y:500}),
+        new Enemy({x:1500, y:430}),]
  player = new Player()
-  teleporters = [new Teleporter({x:1780, y:355})
+  teleporters = [new Teleporter({x:1650, y:400})
 ]
- platforms = [ new Platform({ x:450, y:360, b:200 
+ platforms = [ new Platform({ x:450, y:450, b:200 
 }), new Platform({x:0, y:400,  b:350}),
-new Platform({x:760, y:400,  b:400}),
-new Platform({x:1250, y:350,  b:50}),
-new Platform({x:1400, y:300,  b:90}),
-new Platform({x:1500, y:400,  b:350})]
+new Platform({x:760, y:500,  b:50}),
+new Platform({x:950, y:600,  b:200}),
+new Platform({x:1250, y:530,  b:50}),
+new Platform({x:1400, y:450,  b:350})]
  scrollOfset = 0;
 }
 function animate(){
@@ -200,7 +199,7 @@ if(scrollOfset >= 1300){
     player.position.y <= teleporter.position.y 
     + teleporter.height && keys.up.pressed ){
         
-     window.open("index.html")
+     window.open("coll.html")
       console.log("tele")
      
     }})
