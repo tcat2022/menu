@@ -7,7 +7,7 @@ class Player {
     constructor(){
         this.position = {
             x:100,
-            y:100
+            y:300
         }
         this.velocity = {
             x:0,
@@ -62,12 +62,28 @@ constructor({x,y}){
 }
 draw(){
     ctx.fillStyle = "red"
-    ctx.beginPath()
-    ctx.arc(this.position.x,this.position.y,10, 0, 2* Math.PI)
-    ctx.fill()
-}
-}
 
+ctx.beginPath()
+ctx.arc(this.position.x,this.position.y,10, 0, 2* Math.PI)
+ctx.fill()
+}
+}
+class Teleporter {
+    constructor({x,y}){
+        this.position = {
+            x:x,
+            y:y
+           }
+           this.width = 20
+           this.height = 20
+        } 
+        draw(){
+            ctx.fillStyle = "yellow"
+            ctx.fillRect(this.position.x,this.position.y,
+                this.width,this.height)
+        }  
+    }
+ let   teleporters = [new Teleporter({x:500, y:350})]
 let player = new Player()
 let enemys = [new Enemy({x:350, y:350}), new Enemy({x:300, y:300})]
 let platforms = [new Platform({ x:600, y:260, b:150 
@@ -78,8 +94,15 @@ const keys = {
     },
     left: {
         pressed: false
+    },
+    down: {
+        pressed: false
+    },
+    up: {
+        pressed: false
     }
 }
+
 let scrollOfset = 0;
 function init(){
     enemys =  [new Enemy({x:550, y:350}), 
@@ -90,7 +113,9 @@ function init(){
         new Enemy({x:1350, y:335}),
         new Enemy({x:1480, y:290}),]
  player = new Player()
- platforms = [new Platform({ x:450, y:360, b:200 
+  teleporters = [new Teleporter({x:1780, y:355})
+]
+ platforms = [ new Platform({ x:450, y:360, b:200 
 }), new Platform({x:0, y:400,  b:350}),
 new Platform({x:760, y:400,  b:400}),
 new Platform({x:1250, y:350,  b:50}),
@@ -102,6 +127,7 @@ function animate(){
     requestAnimationFrame(animate)
     ctx.clearRect(0,0,canvas.width,canvas.height)
     player.update()
+    teleporters.forEach(teleporter => {teleporter.draw()})
    enemys.forEach(enemy => {enemy.draw()}) 
     platforms.forEach(platform => {
         platform.draw()
@@ -118,6 +144,9 @@ else {player.velocity.x = 0
 
     if(keys.right.pressed && scrollOfset < 1530 ) {
         scrollOfset += 5
+        teleporters.forEach(teleporter => {
+        teleporter.position.x -= 5
+        })
        enemys.forEach(enemy => {
         enemy.position.x -= 5
        })
@@ -126,6 +155,9 @@ else {player.velocity.x = 0
     }) 
     }else if(keys.left.pressed && scrollOfset > 0) {
         scrollOfset -= 5
+        teleporters.forEach(teleporter => {
+            teleporter.position.x += 5
+            })
         enemys.forEach(enemy => {
             enemy.position.x += 5
            })
@@ -158,13 +190,30 @@ if(scrollOfset >= 1300){
      player.position.y <= enemy.position.y + enemy.height) {
     init() 
  }})
+ teleporters.forEach(teleporter => {
+ if(player.position.x + player.width >= 
+    teleporter.position.x &&
+    player.position.x  <= teleporter.position.x
+     + teleporter.width &&
+    player.position.y + player.height 
+    >= teleporter.position.y &&
+    player.position.y <= teleporter.position.y 
+    + teleporter.height && keys.up.pressed ){
+        
+     window.open("index.html")
+      console.log("tele")
+     
+    }})
+ 
+           
+      
 if(player.position.y > canvas.height){
    init() 
 }
-if((player.position.y < 200) || (player.position.y > 450)){
-    player.velocity.y += 3 
-    console.log("h")
-}
+if(player.position.y < 100){
+    init() 
+ }
+ 
 }
 
 init()
@@ -175,16 +224,21 @@ addEventListener('keydown', ({keyCode}) => {
     console.log("left")
     keys.left.pressed = true
     break;
+    case 87:
+    keys.up.pressed = true
+    break;
     case 32:
-        player.velocity.y -= 15 
         console.log("up")
      console.log("up")
+     
+     player.velocity.y -= 20 
      break;
     case 68:
       console.log("right")
       keys.right.pressed = true
       break;
      case 83:
+        keys.down.pressed = true
        console.log("down")
 }
 })
@@ -196,14 +250,19 @@ addEventListener('keyup', ({keyCode}) => {
     keys.left.pressed = false
     break;
     case 32:
-        player.velocity.y -= 20
+        player.velocity.y += 5 
+     
      console.log("up")
      break;
+     case 87:
+    keys.up.pressed = false
+    break;
     case 68:
       console.log("right")
       keys.right.pressed = false
       break;
      case 83:
+        keys.down.pressed = false
        console.log("down")
 }
 })
