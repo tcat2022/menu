@@ -234,13 +234,13 @@ function init(){
 ]
 //drawing each platform
  platforms = [
-    new Platform({x:2050, y:353,  b:250,a:100, image:img3}),
-    new Platform({x:1260, y:335,  b:350 ,a:150, image:img3}),
-    new Platform({x:-40, y:438,  b:550,a:250, image:img}),
-    new Platform({x:1080, y:438,  b:550,a:250, image:img}),
-new Platform({ x:520, y:438, b:550 ,a:250, image:img1}), 
-new Platform({x:1750, y:440,  b:570,a:250, image:img}),
-new Platform({x:2450, y:438,  b:400,a:250, image:img1})
+    new Platform({x:2050, y:103,  b:250,a:100, image:img3}),
+    new Platform({x:1260, y:385,  b:350 ,a:150, image:img3}),
+    new Platform({x:-40, y:488,  b:550,a:250, image:img}),
+    new Platform({x:1080, y:488,  b:550,a:250, image:img}),
+new Platform({ x:520, y:488, b:550 ,a:250, image:img1}), 
+new Platform({x:1750, y:480,  b:570,a:250, image:img}),
+new Platform({x:2450, y:488,  b:400,a:250, image:img1})
 ]
  scrollOfset = 0;
 }
