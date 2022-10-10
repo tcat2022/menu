@@ -30,7 +30,7 @@ class Player {
     this.staggerframes = 10
     }
     draw() {
-        ctx.drawImage(img6,32 * this.frames,this.frames1 * 48,34,43.5,this.position.x,
+        ctx.drawImage(img6,32 * this.frames,this.frames1 * 48,34,43,this.position.x,
             this.position.y,this.width,this.height) 
     }
     update(){
@@ -67,7 +67,7 @@ class Ai {
     }
     draw() {
        
-        ctx.drawImage(img7,32 * this.frames,32 *this.frames1,32,28, this.position.x,this.position.y
+        ctx.drawImage(img7,32 * this.frames,32 *this.frames1,32,27, this.position.x,this.position.y
             ,this.width, this.height) 
 
     }
