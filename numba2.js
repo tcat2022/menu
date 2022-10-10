@@ -162,9 +162,26 @@ class Teleporter {
                 this.width,this.height)
         }  
     }
+    //particle that player shoots at enemys
+  class Particle {
+    constructor(){
+        this.position = {
+            x:200,
+            y:300
+        }
+        this.width = 10
+        this.height = 10
+    }
+    draw(){
+        ctx.fillStyle = "maroon"
+        ctx.fillRect(this.position.x,this.position.y,
+            this.width,this.height)
+    }
+  }  
     //drawing  game before restart
  let   teleporters = [new Teleporter({x:500, y:350})]
 let player = new Player()
+let particle = new Particle()
 let ai = new Ai()
 let enemys = [new Enemy({x:350, y:350}), new Enemy({x:300, y:300})]
 let platforms = [new Platform({ x:600, y:260, b:150 
@@ -211,6 +228,7 @@ function init(){
         new Enemy({x:2650, y:610,image:img5}),
         new Enemy({x:2800, y:610,image:img5}),]
  player = new Player()
+ particle = new Particle()
   ai = new Ai()
   teleporters = [new Teleporter({x:1650, y:400})
 ]
@@ -237,7 +255,7 @@ function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height)
     ctx.drawImage(img4,0,0,
         canvas.width, canvas.height) 
-        ctx.drawImage(img2,imgx,0,
+        ctx.drawImage(img2,0,0,
             10000, 715)
        
     //updating all  game classes
@@ -249,6 +267,7 @@ function animate(){
     enemys.forEach(enemy => {enemy.update()}) 
     ai.update()
     player.update()
+    particle.draw()
   //making player move when A or D is pressed
 if(keys.right.pressed && player.position.x
    < 400 ) {
