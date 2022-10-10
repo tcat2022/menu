@@ -234,7 +234,7 @@ function init(){
 ]
 //drawing each platform
  platforms = [
-    new Platform({x:2050, y:103,  b:250,a:100, image:img3}),
+    new Platform({x:2050, y:203,  b:250,a:100, image:img3}),
     new Platform({x:1260, y:385,  b:350 ,a:150, image:img3}),
     new Platform({x:-40, y:488,  b:550,a:250, image:img}),
     new Platform({x:1080, y:488,  b:550,a:250, image:img}),
@@ -255,7 +255,7 @@ function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height)
     ctx.drawImage(img4,0,0,
         canvas.width, canvas.height) 
-        ctx.drawImage(img2,0,-150,
+        ctx.drawImage(img2,-6,-150,
             10000, 715)
        
     //updating all  game classes
