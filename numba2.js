@@ -15,7 +15,7 @@ class Player {
     constructor(){
         this.position = {
             x:0,
-            y:400
+            y:200
         }
         this.velocity = {
             x:0,
