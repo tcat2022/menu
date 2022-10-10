@@ -1,26 +1,74 @@
+//getting the html canvas id
 let canvas = document.getElementById("canvas2")
+//getting canvas width and height
 canvas.height = window.innerHeight
 canvas.width = window.innerWidth
+// setting the context to 2d
 ctx = canvas.getContext("2d")
 const gravity = 1.5
+//getting the music file
+const music = new Audio()
+music.src = "city.mp3"
+//player class used to draw and assign properties
+//and add gravity to make the player fall and draw image of the cat
 class Player {
     constructor(){
         this.position = {
-            x:100,
+            x:0,
+            y:400
+        }
+        this.velocity = {
+            x:0,
+            y:0
+        }
+      
+    this.width = 80
+    this.height = 85
+    this.frames = 1
+    this.frames1 = 1
+    this.gameframe = 0
+    this.staggerframes = 10
+    }
+    draw() {
+        ctx.drawImage(img6,32 * this.frames,this.frames1 * 48,34,43.5,this.position.x,
+            this.position.y,this.width,this.height) 
+    }
+    update(){
+    
+        this.draw()
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y  
+        if(this.position.y + this.height + this.velocity.y
+            <= canvas.height
+            )
+  this.velocity.y += gravity
+
+  }
+}
+//ai class used to draw and assign properties and add
+//gravity to make the ai fall and draw image of the dog
+class Ai {
+    constructor(){
+        this.position = {
+            x:1500,
             y:300
         }
         this.velocity = {
             x:0,
             y:0
         }
-        this.width = 30
-        this.height = 40
+        
+        this.width = 50
+        this.height = 50
+        this.frames = 0
+        this.frames1 = 0
+        this.gameframe = 0
+        this.staggerframes = 10
     }
     draw() {
-        ctx.fillStyle = "white"
-        ctx.fillRect(this.position.x, this.position.y, 
-            this.width,this.height)
-           
+       
+        ctx.drawImage(img7,32 * this.frames,32 *this.frames1,32,28, this.position.x,this.position.y
+            ,this.width, this.height) 
 
     }
     update(){
@@ -30,44 +78,75 @@ class Player {
         if(this.position.y + this.height + this.velocity.y
             <= canvas.height
             )
-                this.velocity.y += gravity
-                                   
+                this.velocity.y += gravity                
     }
 }
+
+//platform class used to draw and assign properties
 class Platform {
-    constructor({x, y, b}){
+    constructor({x, y, b, image, a}){
        this.position = {
         x:x,
         y:y
        } 
-       this.width =b
-       this.height = 20
+       this.image = image
+       this.width = b
+       this.height = a
+       
 }
 draw() {
-    ctx.fillStyle = "purple"
-ctx.fillRect(this.position.x,this.position.y,
-     this.width, this.height)
+    ctx.drawImage(this.image, this.position.x,this.position.y
+        ,this.width, this.height) 
 }
 
 }
-
+//enemy class used to draw and assign properties and
+//sprite animation loop for the fire
 class Enemy{
-constructor({x,y}){
+constructor({x,y,image}){
    this.position = {
     x:x,
     y:y
    }
-   this.width = 20
-   this.height = 20
+   this.image = image
+   this.width = 50
+   this.height = 50
+   this.frames = 0
+   this.frames1 = 0
 }
 draw(){
-    ctx.fillStyle = "blue"
-
-ctx.beginPath()
-ctx.arc(this.position.x,this.position.y,10, 0, 2* Math.PI)
-ctx.fill()
+    ctx.drawImage(this.image,64 * this.frames,64 *this.frames1,64,64, this.position.x,this.position.y
+        ,this.width, this.height) 
+}
+update(){
+    this.draw()
+    this.frames++
+    if(this.frames >= 10){
+        this.frames = 0
+    }
+    if(this.frames1 = 0 && this.frames > 10){
+this.frames1 = 1
+}if(this.frames1 = 1 && this.frames > 10){
+  this.frames1 = 2
+   }
+ if(this.frames1 = 2 && this.frames > 10){
+    this.frames1 = 3
+ }
+ if(this.frames1 = 3 && this.frames > 10){
+    this.frames1 = 4
+     }
+     if(this.frames1 = 4 && this.frames > 10){
+      this.frames1 = 5
+ }   
+ if(this.frames1 = 5 && this.frames > 10){
+    this.frames1 = 6
+        } 
+  if(this.frames1 = 6 && this.frames > 10){
+  this.frames1 = 0
+       }     
 }
 }
+//teleporter class used to draw and assign properties
 class Teleporter {
     constructor({x,y}){
         this.position = {
@@ -83,11 +162,14 @@ class Teleporter {
                 this.width,this.height)
         }  
     }
+    //drawing  game before restart
  let   teleporters = [new Teleporter({x:500, y:350})]
 let player = new Player()
+let ai = new Ai()
 let enemys = [new Enemy({x:350, y:350}), new Enemy({x:300, y:300})]
 let platforms = [new Platform({ x:600, y:260, b:150 
 }), new Platform({x:20, y:300,  b:150})]
+//important for keydown and up 
 const keys = {
     right: {
         pressed: false
@@ -102,35 +184,72 @@ const keys = {
         pressed: false
     }
 }
-
+//getting all my images and assigning them to consts
+const img1 = new Image()
+img1.src = "art2.png"
+const img = new Image()
+img.src = "art.png"
+const img2 = new Image()
+    img2.src = "city.png"
+    const img3 = new Image()
+  img3.src = "platform.png"
+  const img4 = new Image()
+  img4.src = "clouds.png"
+  const img5 = new Image()
+  img5.src = "fire.png"
+  const img6 = new Image()
+  img6.src = "cat.png"
+  const img7 = new Image()
+  img7.src = "dog.png"
+//can be used for a win senario
 let scrollOfset = 0;
+//function that restartes the game
 function init(){
-    enemys =  [new Enemy({x:550, y:425}), 
-        new Enemy({x:880, y:550}),
-        new Enemy({x:1050, y:580}),
-        new Enemy({x:1200, y:580}),
-        new Enemy({x:1350, y:500}),
-        new Enemy({x:1500, y:430}),]
+    //drawing the enemys, player, ai ,and teleporter 
+   enemys =  [
+        new Enemy({x:1950, y:610,image:img5}), 
+        new Enemy({x:2650, y:610,image:img5}),
+        new Enemy({x:2800, y:610,image:img5}),]
  player = new Player()
+  ai = new Ai()
   teleporters = [new Teleporter({x:1650, y:400})
 ]
- platforms = [ new Platform({ x:450, y:450, b:200 
-}), new Platform({x:0, y:400,  b:350}),
-new Platform({x:760, y:500,  b:50}),
-new Platform({x:950, y:600,  b:200}),
-new Platform({x:1250, y:530,  b:50}),
-new Platform({x:1400, y:450,  b:350})]
+//drawing each platform
+ platforms = [
+    new Platform({x:2050, y:553,  b:250,a:100, image:img3}),
+    new Platform({x:1260, y:535,  b:350 ,a:150, image:img3}),
+    new Platform({x:-40, y:638,  b:550,a:250, image:img}),
+    new Platform({x:1080, y:638,  b:550,a:250, image:img}),
+new Platform({ x:520, y:638, b:550 ,a:250, image:img1}), 
+new Platform({x:1750, y:640,  b:570,a:250, image:img}),
+new Platform({x:2450, y:638,  b:400,a:250, image:img1})
+]
  scrollOfset = 0;
 }
+let imgx = -5
+let imgy = 0
+
 function animate(){
-    requestAnimationFrame(animate)
+    //playing the music
+    music.play()
+    //crateing an animation loop
+    requestAnimationFrame(animate) 
     ctx.clearRect(0,0,canvas.width,canvas.height)
-    player.update()
+    ctx.drawImage(img4,0,0,
+        canvas.width, canvas.height) 
+        ctx.drawImage(img2,imgx,0,
+            10000, 715)
+       
+    //updating all  game classes
     teleporters.forEach(teleporter => {teleporter.draw()})
-   enemys.forEach(enemy => {enemy.draw()}) 
+  
     platforms.forEach(platform => {
         platform.draw()
     })
+    enemys.forEach(enemy => {enemy.update()}) 
+    ai.update()
+    player.update()
+  //making player move when A or D is pressed
 if(keys.right.pressed && player.position.x
    < 400 ) {
     player.velocity.x = 5
@@ -140,9 +259,12 @@ if(keys.right.pressed && player.position.x
 player.velocity.x = -5
 }
 else {player.velocity.x = 0
-
-    if(keys.right.pressed && scrollOfset < 1530 ) {
+ //moving the world left when A is pressed 
+    //to create a sidescrolling efect
+    if(keys.right.pressed  ) {
         scrollOfset += 5
+      ai.position.x -= 5
+        imgx -= 2
         teleporters.forEach(teleporter => {
         teleporter.position.x -= 5
         })
@@ -152,8 +274,12 @@ else {player.velocity.x = 0
         platforms.forEach(platform => {
          platform.position.x -= 5 
     }) 
+    //moving the world right when D is pressed 
+    //to create a sidescrolling efect
     }else if(keys.left.pressed && scrollOfset > 0) {
         scrollOfset -= 5
+        imgx += 2
+        ai.position.x += 5
         teleporters.forEach(teleporter => {
             teleporter.position.x += 5
             })
@@ -167,6 +293,7 @@ else {player.velocity.x = 0
      }
 } 
 console.log(scrollOfset)
+//stoping the players gravity when it hits a platform
 platforms.forEach(platform => {
  if(player.position.y + player.height <=
   platform.position.y && player.position.y +
@@ -176,19 +303,56 @@ platforms.forEach(platform => {
   player.position.x <= platform.position.x +
    platform.width){
 player.velocity.y = 0
+
  }
 })
-if(scrollOfset >= 1300){
-    
-}  enemys.forEach(enemy => {
-    
+//stoping the ais gravity when it hits a platform
+platforms.forEach(platform => {
+    if(ai.position.y + ai.height  <=
+     platform.position.y && ai.position.y +
+     ai.height + ai.velocity.y >=
+     platform.position.y && ai.position.x + 
+     ai.width >= platform.position.x &&
+     ai.position.x <= platform.position.x +
+      platform.width){
+   ai.velocity.y = 0
+    }
+   })
+   //ai sprite animation
+if(ai.position.x < player.position.x ){
+    ai.velocity.x = 1.5
+    if(ai.gameframe % ai.staggerframes == 0){
+        if (ai.frames < 2 ){ ai.frames++}
+        else {ai.frames = 0}  }
+        ai.frames1 = 0
+     ai.gameframe++
+}if(ai.position.x > player.position.x){
+    ai.velocity.x = -1.5
+    if(ai.gameframe % ai.staggerframes == 0){
+        if (ai.frames < 2 ){ ai.frames++}
+        else {ai.frames = 0}  }
+        ai.frames1 = 3
+     ai.gameframe++
+}
 
+// if the player hits the ai restart the game
+if(player.position.x + player.width >= ai.position.x  &&
+    player.position.x  <= ai.position.x + ai.width &&
+    player.position.y + player.height >= ai.position.y && 
+     player.position.y <= ai.position.y + ai.height ) {
+   init()
+   music.currentTime = 0 
+}
+// if the player hits an enemy restart the game
+enemys.forEach(enemy => {
  if(player.position.x + player.width >= enemy.position.x &&
      player.position.x  <= enemy.position.x + enemy.width &&
      player.position.y + player.height >= enemy.position.y &&
      player.position.y <= enemy.position.y + enemy.height) {
     init() 
+    music.currentTime = 0
  }})
+ //teleports the player
  teleporters.forEach(teleporter => {
  if(player.position.x + player.width >= 
     teleporter.position.x &&
@@ -205,22 +369,41 @@ if(scrollOfset >= 1300){
     }})
  
            
-      
+   // restarts the game    
 if(player.position.y > canvas.height){
    init() 
+music.currentTime = 0
+
 }
 if(player.position.y < 100){
     init() 
  }
- 
+ //slows down the sprite animation loop 
+ // player sprite animation on keydown
+ if(keys.right.pressed){
+ if(player.gameframe % player.staggerframes == 0){
+    if (player.frames < 2 ){ player.frames++}
+    else {player.frames = 0}  }
+    player.frames1 = 1
+  player.gameframe++}
+  if(keys.left.pressed){
+    if(player.gameframe % player.staggerframes == 0){
+       if (player.frames < 2 ){ player.frames++}
+       else {player.frames = 0}  }
+       player.frames1 = 3
+     player.gameframe++}
+     
 }
-
+//calling the functions that run and restarte the game
 init()
 animate()
+//when user keys down
 addEventListener('keydown', ({keyCode}) => {
     switch(keyCode){
    case 65:
     console.log("left")
+    player.frames1 = 3
+  
     keys.left.pressed = true
     break;
     case 87:
@@ -229,11 +412,12 @@ addEventListener('keydown', ({keyCode}) => {
     case 32:
         console.log("up")
      console.log("up")
-     
-     player.velocity.y -= 20 
+   
+     player.velocity.y -= 28 
      break;
     case 68:
       console.log("right")
+  
       keys.right.pressed = true
       break;
      case 83:
@@ -241,15 +425,16 @@ addEventListener('keydown', ({keyCode}) => {
        console.log("down")
 }
 })
-
+//when user keysup
 addEventListener('keyup', ({keyCode}) => {
     switch(keyCode){
    case 65:
     console.log("left")
+    player.frames = 1
     keys.left.pressed = false
     break;
     case 32:
-        player.velocity.y += 5 
+        player.velocity.y += 3
      
      console.log("up")
      break;
@@ -258,11 +443,12 @@ addEventListener('keyup', ({keyCode}) => {
     break;
     case 68:
       console.log("right")
+      player.frames = 1
       keys.right.pressed = false
+      
       break;
      case 83:
         keys.down.pressed = false
        console.log("down")
 }
 })
-let win = document.getElementById("win")

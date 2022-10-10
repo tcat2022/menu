@@ -15,17 +15,17 @@
   height: 100%;
   top: 0%;
   left: 0%;
-  background:lightblue;
+  background: lightskyblue;
 
 }
+
 #canvas2{
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0%;
   left: 0%;
-  background:lightseagreen;
-
+  background:black;
 }
 #win{
   position: absolute;
