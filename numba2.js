@@ -45,6 +45,7 @@ class Player {
 
   }
 }
+
 //ai class used to draw and assign properties and add
 //gravity to make the ai fall and draw image of the dog
 class Ai {
@@ -57,7 +58,6 @@ class Ai {
             x:0,
             y:0
         }
-        
         this.width = 50
         this.height = 50
         this.frames = 0
@@ -164,24 +164,27 @@ class Teleporter {
     }
     //particle that player shoots at enemys
   class Particle {
-    constructor(){
-        this.position = {
-            x:200,
-            y:300
-        }
+    constructor({position,velocity}){
+        this.position = position
+        this.velocity = velocity
         this.width = 10
         this.height = 10
     }
     draw(){
-        ctx.fillStyle = "maroon"
+        ctx.fillStyle = "red"
         ctx.fillRect(this.position.x,this.position.y,
             this.width,this.height)
+    }
+    update(){
+        this.draw()
+this.position.x += this.velocity.x
+this.position.y += this.velocity.y
     }
   }  
     //drawing  game before restart
  let   teleporters = [new Teleporter({x:500, y:350})]
 let player = new Player()
-let particle = new Particle()
+let  particles = []
 let ai = new Ai()
 let enemys = [new Enemy({x:350, y:350}), new Enemy({x:300, y:300})]
 let platforms = [new Platform({ x:600, y:260, b:150 
@@ -228,10 +231,11 @@ function init(){
         new Enemy({x:2650, y:610,image:img5}),
         new Enemy({x:2800, y:610,image:img5}),]
  player = new Player()
- particle = new Particle()
+ particles = []
   ai = new Ai()
   teleporters = [new Teleporter({x:1650, y:400})
 ]
+
 //drawing each platform
  platforms = [
     new Platform({x:2050, y:395,  b:250,a:100, image:img3}),
@@ -266,8 +270,8 @@ function animate(){
     })
     enemys.forEach(enemy => {enemy.update()}) 
     ai.update()
+   particles.forEach(particle => { particle.update()})
     player.update()
-    particle.draw()
   //making player move when A or D is pressed
 if(keys.right.pressed && player.position.x
    < 400 ) {
@@ -293,6 +297,9 @@ else {player.velocity.x = 0
         platforms.forEach(platform => {
          platform.position.x -= 5 
     }) 
+    particles.forEach(particle => {
+        particle.position.x -= 5 
+    }) 
     //moving the world right when D is pressed 
     //to create a sidescrolling efect
     }else if(keys.left.pressed && scrollOfset > 0) {
@@ -308,6 +315,9 @@ else {player.velocity.x = 0
        
         platforms.forEach(platform => {
             platform.position.x += 5 
+        }) 
+        particles.forEach(particle => {
+            particle.position.x += 5 
         }) 
      }
 } 
@@ -360,6 +370,7 @@ if(player.position.x + player.width >= ai.position.x  &&
     player.position.y + player.height >= ai.position.y && 
      player.position.y <= ai.position.y + ai.height ) {
    init()
+   count2 = 2
    music.currentTime = 0 
 }
 // if the player hits an enemy restart the game
@@ -369,6 +380,7 @@ enemys.forEach(enemy => {
      player.position.y + player.height >= enemy.position.y &&
      player.position.y <= enemy.position.y + enemy.height) {
     init() 
+    count2 = 2
     music.currentTime = 0
  }})
  //teleports the player
@@ -386,16 +398,42 @@ enemys.forEach(enemy => {
       console.log("tele")
      
     }})
- 
-           
+ //kills enemys if hit by particle
+ particles.forEach(particle => {
+    if(ai.position.x + ai.width >= particle.position.x &&
+        ai.position.x  <= particle.position.x + particle.width &&
+         ai.position.y + player.height >= particle.position.y &&
+        ai.position.y <= particle.position.y + particle.height &&
+        count >= 1){
+  ai.position.y = 1000
+ particle.position.y = -20
+         } 
+ })
+ particles.forEach(particle => {
+ if(ai.position.x + ai.width >= particle.position.x &&
+    ai.position.x  <= particle.position.x + particle.width &&
+     ai.position.y + player.height >= particle.position.y &&
+    ai.position.y <= particle.position.y + particle.height){
+count += 1
+particle.position.y = -20
+
+     } 
+})
+   particles.forEach(particle => {
+    if(particle.position.x >= canvas.width){
+        particle.position.y = -20
+    }
+   })        
    // restarts the game    
 if(player.position.y > canvas.height){
    init() 
+   count2 = 2
 music.currentTime = 0
 
 }
-if(player.position.y < 100){
+if(player.position.y < 100 ){
     init() 
+    count2 = 2
  }
  //slows down the sprite animation loop 
  // player sprite animation on keydown
@@ -411,18 +449,20 @@ if(player.position.y < 100){
        else {player.frames = 0}  }
        player.frames1 = 3
      player.gameframe++}
-     
 }
 //calling the functions that run and restarte the game
 init()
 animate()
+let count = 0
+let count2 = 2
+
 //when user keys down
 addEventListener('keydown', ({keyCode}) => {
     switch(keyCode){
    case 65:
     console.log("left")
     player.frames1 = 3
-  
+
     keys.left.pressed = true
     break;
     case 87:
@@ -436,19 +476,30 @@ addEventListener('keydown', ({keyCode}) => {
      break;
     case 68:
       console.log("right")
-  
       keys.right.pressed = true
       break;
      case 83:
+        count2 -= 1
+        particles.push(new Particle({
+            position: {
+                x:player.position.x + 50,
+                y:player.position.y + 50
+            }, velocity: {
+                x:2,
+                y:0
+            }
+        }))
+      
         keys.down.pressed = true
        console.log("down")
-}
+    }
 })
 //when user keysup
 addEventListener('keyup', ({keyCode}) => {
     switch(keyCode){
    case 65:
     console.log("left")
+
     player.frames = 1
     keys.left.pressed = false
     break;
@@ -471,3 +522,12 @@ addEventListener('keyup', ({keyCode}) => {
        console.log("down")
 }
 })
+function loop(){
+    requestAnimationFrame(loop)
+    if(count2 <= -1){
+     particles.splice(0)
+     count2 = 0
+    }
+document.getElementById("score").innerText = count2 + " shots left"
+}
+loop()
